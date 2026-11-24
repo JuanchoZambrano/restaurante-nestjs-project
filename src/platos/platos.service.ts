@@ -10,4 +10,29 @@ export class PlatosService {
   findAll() {
     return this.prisma.plato.findMany();
   }
+
+  findOne(id: number) {
+    return this.prisma.plato.findUnique({
+      where: { id },
+    });
+  }
+
+  create(data: any) {
+    return this.prisma.plato.create({
+      data,
+    });
+  }
+
+  update(id: number, data: any) {
+    return this.prisma.plato.update({
+      where: { id },
+      data,
+    });
+  }
+
+  remove(id: number) {
+    return this.prisma.plato.delete({
+      where: { id },
+    });
+  }
 }

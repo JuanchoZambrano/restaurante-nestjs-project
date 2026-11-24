@@ -15,4 +15,21 @@ export class PlatoIngredientesService {
       },
     });
   }
+
+  create(data: any) {
+    return this.prisma.platoIngrediente.create({
+      data,
+    });
+  }
+
+  remove(platoId: number, ingredienteId: number) {
+    return this.prisma.platoIngrediente.delete({
+      where: {
+        platoId_ingredienteId: {
+          platoId,
+          ingredienteId,
+        },
+      },
+    });
+  }
 }
