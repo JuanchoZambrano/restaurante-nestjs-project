@@ -5,9 +5,12 @@ import { PrismaModule } from './prisma/prisma.module.js';
 import { ClientesModule } from './clientes/clientes.module.js';
 import { EmpleadosModule } from './empleados/empleados.module.js';
 import { CategoriasModule } from './categorias/categorias.module.js';
+import { ProveedoresModule } from './proveedores/proveedores.module.js';
+import { ProveedorIngredienteModule } from './proveedor-ingrediente/proveedor-ingrediente.module.js';
+import { PedidosModule } from './pedidos/pedidos.module.js';
 
 @Module({
-  imports: [PrismaModule, ClientesModule, EmpleadosModule, CategoriasModule],
+  imports: [PrismaModule, ClientesModule, EmpleadosModule, CategoriasModule, ProveedoresModule, ProveedorIngredienteModule, PedidosModule],
   controllers: [AppController],
   providers: [AppService],
 })
