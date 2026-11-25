@@ -8,7 +8,11 @@ import {
   Body,
   ParseIntPipe,
 } from '@nestjs/common';
+import { CreateDetallePedidoDto }
+from './dto/create-detallePedido.dto.js';
 
+import { UpdateDetallePedidoDto }
+from './dto/update-detallePedido.dto.js';
 import { DetallePedidosService } from './detallePedidos.service.js';
 
 @Controller('detalle-pedidos')
@@ -30,19 +34,24 @@ export class DetallePedidosController {
   }
 
   @Post()
-  create(
-    @Body() data: any,
-  ) {
-    return this.detallePedidosService.create(data);
-  }
+create(
+  @Body()
+  dto: CreateDetallePedidoDto,
+) {
+  return this.detallePedidosService.create(dto);
+}
 
   @Patch(':id')
-  update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() data: any,
-  ) {
-    return this.detallePedidosService.update(id, data);
-  }
+update(
+  @Param('id', ParseIntPipe)
+  id: number,
+
+  @Body()
+  dto: UpdateDetallePedidoDto,
+) {
+  return this.detallePedidosService.update(id, dto);
+}
+
 
   @Delete(':id')
   remove(

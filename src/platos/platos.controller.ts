@@ -8,6 +8,11 @@ import {
   Body,
   ParseIntPipe,
 } from '@nestjs/common';
+import { CreatePlatoDto }
+from './dto/create-plato.dto.js';
+
+import { UpdatePlatoDto }
+from './dto/update-plato.dto.js';
 
 import { PlatosService } from './platos.service.js';
 
@@ -30,19 +35,26 @@ export class PlatosController {
   }
 
   @Post()
-  create(
-    @Body() data: any,
-  ) {
-    return this.platosService.create(data);
-  }
+create(
+  @Body()
+  dto: CreatePlatoDto,
+) {
+  return this.platosService.create(dto);
+}
 
   @Patch(':id')
-  update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() data: any,
-  ) {
-    return this.platosService.update(id, data);
-  }
+update(
+  @Param('id', ParseIntPipe)
+  id: number,
+
+  @Body()
+  dto: UpdatePlatoDto,
+) {
+  return this.platosService.update(
+    id,
+    dto,
+  );
+}
 
   @Delete(':id')
   remove(
