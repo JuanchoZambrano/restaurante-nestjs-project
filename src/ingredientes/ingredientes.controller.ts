@@ -8,7 +8,13 @@ import {
   Body,
   ParseIntPipe,
 } from '@nestjs/common';
+import {
+  CreateIngredienteDto
+} from './dto/create-ingrediente.dto.js';
 
+import {
+  UpdateIngredienteDto
+} from './dto/update-ingrediente.dto.js';
 import { IngredientesService } from './ingredientes.service.js';
 
 @Controller('ingredientes')
@@ -30,19 +36,26 @@ export class IngredientesController {
   }
 
   @Post()
-  create(
-    @Body() data: any,
-  ) {
-    return this.ingredientesService.create(data);
-  }
+create(
+  @Body()
+  dto: CreateIngredienteDto,
+) {
+  return this.ingredientesService.create(dto);
+}
 
   @Patch(':id')
-  update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() data: any,
-  ) {
-    return this.ingredientesService.update(id, data);
-  }
+update(
+  @Param('id', ParseIntPipe)
+  id: number,
+
+  @Body()
+  dto: UpdateIngredienteDto,
+) {
+  return this.ingredientesService.update(
+    id,
+    dto,
+  );
+}
 
   @Delete(':id')
   remove(

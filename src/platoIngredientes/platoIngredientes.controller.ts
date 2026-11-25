@@ -8,7 +8,11 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 
-import { PlatoIngredientesService } from './platoIngredientes.service.js';
+import { CreatePlatoIngredienteDto }
+from './dto/create-platoIngrediente.dto.js';
+
+import { PlatoIngredientesService }
+from './platoIngredientes.service.js';
 
 @Controller('plato-ingredientes')
 export class PlatoIngredientesController {
@@ -23,15 +27,19 @@ export class PlatoIngredientesController {
 
   @Post()
   create(
-    @Body() data: any,
+    @Body()
+    dto: CreatePlatoIngredienteDto,
   ) {
-    return this.platoIngredientesService.create(data);
+    return this.platoIngredientesService.create(dto);
   }
 
   @Delete(':platoId/:ingredienteId')
   remove(
-    @Param('platoId', ParseIntPipe) platoId: number,
-    @Param('ingredienteId', ParseIntPipe) ingredienteId: number,
+    @Param('platoId', ParseIntPipe)
+    platoId: number,
+
+    @Param('ingredienteId', ParseIntPipe)
+    ingredienteId: number,
   ) {
     return this.platoIngredientesService.remove(
       platoId,
