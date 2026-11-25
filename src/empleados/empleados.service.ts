@@ -1,6 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/client';
+import { CreateEmpleadoDto } from './dto/create.empleado.dto.js';
+import { UpdateEmpleadoDto } from './dto/update.empleado.dto.js';
 
 @Injectable()
 export class EmpleadosService {
@@ -36,25 +38,38 @@ export class EmpleadosService {
     return empleado;
   }
 
-  async create(data: { nombre: string; cargo: string; telefono: string }) {
+  async create(dto: CreateEmpleadoDto) {
     return await this.prisma.empleado.create({
-      data,
+      data: {
+        nombre: dto.nombre,
+        cargo: dto.cargo,
+        telefono: dto.telefono ?? null,
+      },
       select: {
+        id: true,
         nombre: true,
         cargo: true,
+        telefono: true,
       },
     });
   }
 
-  async update(
-    id: number,
-    data: { nombre: string; cargo: string; telefono: string },
-  ) {
+  async update(id: number, dto: UpdateEmpleadoDto) {
     const idNumber = Number(id);
     try {
       const empleado = await this.prisma.empleado.update({
         where: { id: idNumber },
-        data,
+        data: {
+          ...(dto.nombre !== undefined && { nombre: dto.nombre }),
+          ...(dto.cargo !== undefined && { nombre: dto.cargo }),
+          ...(dto.telefono !== undefined && { nombre: dto.telefono }),
+        },
+        select: {
+          id: true,
+          nombre: true,
+          cargo: true,
+          telefono: true,
+        },
       });
       return empleado;
     } catch (error) {
