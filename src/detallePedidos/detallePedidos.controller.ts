@@ -14,7 +14,13 @@ from './dto/create-detallePedido.dto.js';
 import { UpdateDetallePedidoDto }
 from './dto/update-detallePedido.dto.js';
 import { DetallePedidosService } from './detallePedidos.service.js';
+import { UseGuards } from '@nestjs/common'
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard.js'
+import { RolesGuard } from '../auth/guards/roles.guard.js'
+import { Roles } from '../auth/decorators/roles.decorator.js'
 
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles('GERENTE', 'MESERO')
 @Controller('detalle-pedidos')
 export class DetallePedidosController {
   constructor(

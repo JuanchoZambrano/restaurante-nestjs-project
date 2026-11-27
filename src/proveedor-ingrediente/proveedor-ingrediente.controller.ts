@@ -11,7 +11,13 @@ import {
 import { ProveedorIngredienteService } from './proveedor-ingrediente.service.js';
 import { CreateProveedorIngredienteDto } from './dto/create-proveedor-ingrediente.dto.js';
 import { UpdateProveedorIngredienteDto } from './dto/update-proveedor-ingrediente.dto.js';
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard.js';
+import { RolesGuard } from '../auth/guards/roles.guard.js';
+import { Roles } from '../auth/decorators/roles.decorator.js';
 
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles('GERENTE')
 @Controller('proveedor-ingrediente')
 export class ProveedorIngredienteController {
   constructor(

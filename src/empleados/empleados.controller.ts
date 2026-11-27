@@ -2,7 +2,13 @@ import { Body, Controller, Get, Param, Post, Put, Patch } from '@nestjs/common';
 import { EmpleadosService } from './empleados.service.js';
 import { CreateEmpleadoDto } from './dto/create.empleado.dto.js';
 import { UpdateEmpleadoDto } from './dto/update.empleado.dto.js';
+import { UseGuards } from '@nestjs/common'
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard.js'
+import { RolesGuard } from '../auth/guards/roles.guard.js'
+import { Roles } from '../auth/decorators/roles.decorator.js'
 
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles('GERENTE')
 @Controller('empleados')
 export class EmpleadosController {
   constructor(private readonly empleadosService: EmpleadosService) {}

@@ -10,7 +10,13 @@ import {
 import { ClientesService } from './clientes.service.js';
 import { CreateClienteDto } from './dto/create.cliente.dto.js';
 import { UpdateClienteDto } from './dto/update.cliente.dto.js';
+import { UseGuards } from '@nestjs/common'
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard.js'
+import { RolesGuard } from '../auth/guards/roles.guard.js'
+import { Roles } from '../auth/decorators/roles.decorator.js'
 
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles('GERENTE', 'MESERO')
 @Controller('clientes')
 export class ClientesController {
   constructor(private readonly clientesService: ClientesService) {}
