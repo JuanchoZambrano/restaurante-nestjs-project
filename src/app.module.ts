@@ -8,9 +8,10 @@ import { CategoriasModule } from './categorias/categorias.module.js';
 import { ProveedoresModule } from './proveedores/proveedores.module.js';
 import { ProveedorIngredienteModule } from './proveedor-ingrediente/proveedor-ingrediente.module.js';
 import { PedidosModule } from './pedidos/pedidos.module.js';
+import { AuthModule } from './auth/auth.module.js';
 
 @Module({
-  imports: [PrismaModule, ClientesModule, EmpleadosModule, CategoriasModule, ProveedoresModule, ProveedorIngredienteModule, PedidosModule],
+  imports: [PrismaModule, ClientesModule, EmpleadosModule, CategoriasModule, ProveedoresModule, ProveedorIngredienteModule, PedidosModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })
