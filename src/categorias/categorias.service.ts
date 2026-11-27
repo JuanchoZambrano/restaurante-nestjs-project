@@ -1,6 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/client';
+import { CreateCategoriaDto } from './dto/create.categoria.dto.js';
+import { UpdateCategoriaDto } from './dto/update.categoria.dto.js';
 
 @Injectable()
 export class CategoriasService {
@@ -23,22 +25,36 @@ export class CategoriasService {
     return category;
   }
 
-  async create(data: { nombre: string; descripcion: string }) {
+  async create(dto: CreateCategoriaDto) {
     return await this.prisma.categoria.create({
-      data,
+      data: {
+        nombre: dto.nombre,
+        descripcion: dto.descripcion ?? null,
+      },
       select: {
+        id: true,
         nombre: true,
         descripcion: true,
       },
     });
   }
 
-  async update(id: number, data: { nombre: string; descripcion: string }) {
+  async update(id: number, dto: UpdateCategoriaDto) {
     const idNumber = Number(id);
     try {
       const category = await this.prisma.categoria.update({
         where: { id: idNumber },
-        data,
+        data: {
+          ...(dto.nombre !== undefined && { nombre: dto.nombre }),
+          ...(dto.descripcion !== undefined && {
+            descripcion: dto.descripcion,
+          }),
+        },
+        select: {
+          id: true,
+          nombre: true,
+          descripcion: true,
+        },
       });
 
       return category;

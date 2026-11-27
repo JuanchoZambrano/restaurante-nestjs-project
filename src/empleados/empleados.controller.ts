@@ -1,5 +1,7 @@
 import { Body, Controller, Get, Param, Post, Put, Patch } from '@nestjs/common';
 import { EmpleadosService } from './empleados.service.js';
+import { CreateEmpleadoDto } from './dto/create.empleado.dto.js';
+import { UpdateEmpleadoDto } from './dto/update.empleado.dto.js';
 
 @Controller('empleados')
 export class EmpleadosController {
@@ -21,13 +23,13 @@ export class EmpleadosController {
   }
 
   @Post()
-  create(@Body() body: any) {
-    return this.empleadosService.create(body);
+  create(@Body() dto: CreateEmpleadoDto) {
+    return this.empleadosService.create(dto);
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() body: any) {
-    return this.empleadosService.update(id, body);
+  update(@Param('id') id: number, @Body() dto: UpdateEmpleadoDto) {
+    return this.empleadosService.update(id, dto);
   }
 
   @Patch(':id')

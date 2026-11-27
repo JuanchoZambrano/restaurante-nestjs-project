@@ -1,6 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/client';
+import { CreateClienteDto } from './dto/create.cliente.dto.js';
+import { UpdateClienteDto } from './dto/update.cliente.dto.js';
 
 @Injectable()
 export class ClientesService {
@@ -25,25 +27,38 @@ export class ClientesService {
     return client;
   }
 
-  async create(data: { nombre: string; correo: string; telefono: string }) {
+  async create(dto: CreateClienteDto) {
     return await this.prisma.cliente.create({
-      data,
+      data: {
+        nombre: dto.nombre,
+        telefono: dto.telefono ?? null,
+        correo: dto.correo ?? null,
+      },
       select: {
+        id: true,
         nombre: true,
+        telefono: true,
         correo: true,
       },
     });
   }
 
-  async update(
-    id: number,
-    data: { nombre: string; correo: string; telefono: string },
-  ) {
+  async update(id: number, dto: UpdateClienteDto) {
     const idNumber = Number(id);
     try {
       const cliente = await this.prisma.cliente.update({
         where: { id: idNumber },
-        data,
+        data: {
+          ...(dto.nombre !== undefined && { nombre: dto.nombre }),
+          ...(dto.telefono !== undefined && { telefono: dto.telefono }),
+          ...(dto.correo !== undefined && { correo: dto.correo }),
+        },
+        select: {
+          id: true,
+          nombre: true,
+          telefono: true,
+          correo: true,
+        },
       });
       return cliente;
     } catch (error) {
